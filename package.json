@@ -1,0 +1,28 @@
+{
+  "name": "search-trie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "npm run test:pick -- '_tests/**/*spec.js'",
+    "test:pick": "BABEL_ENV=cjs mocha --compilers js:babel-core/register",
+    "build": "babel src -d lib",
+    "prepublish": "npm run build"
+  },
+  "author": "Anton Korzunov (thekashey@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theKashey/search-trie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theKashey/search-trie/issues"
+  },
+  "homepage": "https://github.com/theKashey/search-trie#readme"
+}
