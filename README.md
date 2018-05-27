@@ -1,5 +1,8 @@
 search-trie
 =====
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/theKashey/search-trie.svg)](https://greenkeeper.io/)
+
 A simple trie structure to perform search on texts in O(n) time, where n - number of characters in searched word.
 
 Super simple, Super fast, and just 45 lines long.
