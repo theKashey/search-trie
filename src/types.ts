@@ -15,16 +15,16 @@ export interface SearchCharTrie<T> {
   put(word: string, value: T): void;
 }
 
+export type SearchResult<T> = {
+  path: string[];
+  value: T | undefined;
+};
+
 export interface SearchWordTrie<T> {
   /**
    * checks if value exists
    */
-  findNearest(
-    word: string[]
-  ): {
-    path: string[];
-    value: T | undefined;
-  };
+  findNearest(word: string[]): SearchResult<T>;
 
   /**
    * puts a new value into the trie

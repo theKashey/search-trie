@@ -1,20 +1,25 @@
 import { EMPTY } from './magic';
-import { EdgeValues, SearchWordTrie, TrieNode } from './types';
+import { EdgeValues, SearchResult, SearchWordTrie, TrieNode } from './types';
 
 const put = (node: TrieNode, str: string[], value: any, values: EdgeValues) => {
   let nextNode;
+
   for (const c of str) {
     nextNode = node[c];
+
     if (!nextNode) {
       nextNode = node[c] = Object.create(EMPTY);
     }
+
     node = nextNode;
   }
+
   values.set(node, value);
+
   return nextNode;
 };
 
-export const searchTrie = (trie: TrieNode, paths: string[], values: EdgeValues) => {
+export const searchTrie = <T>(trie: TrieNode, paths: string[], values: EdgeValues): SearchResult<T> => {
   let node = trie;
   let lastValue;
   let lastValuePath = -1;
@@ -22,11 +27,15 @@ export const searchTrie = (trie: TrieNode, paths: string[], values: EdgeValues) 
 
   for (let i = 0; i < paths.length; ++i) {
     node = node[paths[i]];
+
     if (!node) {
       break;
     }
+
     valuePath.push(paths[i]);
+
     const value = values.get(node);
+
     if (value !== undefined) {
       lastValue = value;
       lastValuePath = i;

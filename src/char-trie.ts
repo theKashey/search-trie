@@ -10,28 +10,37 @@ const put = (
   edgeDelimiter: string
 ) => {
   let nextNode;
+
   for (const c of str) {
     nextNode = node[c];
+
     if (!nextNode) {
       nextNode = node[c] = Object.create(EMPTY);
+
       if (c === edgeDelimiter) {
         edgeNodes.delete(node);
       }
     }
+
     node = nextNode;
   }
+
   edgeNodes.set(node, str);
   values.set(node, value);
+
   return nextNode;
 };
 
 const get = (node: TrieNode, str: string) => {
   let nextNode;
+
   for (const c of str) {
     nextNode = node[c];
+
     if (!nextNode) {
       return false;
     }
+
     node = nextNode;
   }
 
@@ -59,6 +68,7 @@ export const buildCharacterTrie = <T>(
     },
     get(word) {
       const node = get(root, word);
+
       return node ? values.get(node) : undefined;
     },
     put(word, value) {
