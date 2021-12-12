@@ -6,7 +6,7 @@
   "license": "MIT",
   "sideEffects": false,
   "devDependencies": {
-    "@theuiteam/lib-builder": "^0.0.11",
+    "@theuiteam/lib-builder": "^0.1.4",
     "@size-limit/preset-small-lib": "^2.1.6"
   },
   "repository": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/theKashey/search-trie#readme",
   "main": "dist/es5/index.js",
   "module": "dist/es2015/index.js",
+  "module:es2019": "dist/es2019/index.js",
   "types": "dist/es5/index.d.ts",
   "engines": {
     "node": ">=10"
@@ -55,7 +56,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
-      "tslint --fix",
+      "eslint --fix",
       "git add"
     ],
     "*.{js,css,json,md}": [
