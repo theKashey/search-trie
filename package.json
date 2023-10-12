@@ -5,10 +5,6 @@
   "author": "Anton Korzunov (thekashey@gmail.com)",
   "license": "MIT",
   "sideEffects": false,
-  "devDependencies": {
-    "@theuiteam/lib-builder": "^0.1.4",
-    "@size-limit/preset-small-lib": "^2.1.6"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/theKashey/search-trie.git"
@@ -42,7 +38,11 @@
     "changelog:rewrite": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
-    "tslib": "^1.9.3"
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@theuiteam/lib-builder": "^0.3.0",
+    "@size-limit/preset-small-lib": "^9.0.0"
   },
   "files": [
     "dist"

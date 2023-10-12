@@ -1,5 +1,5 @@
 import { EMPTY } from './magic';
-import { EdgeValues, SearchResult, SearchWordTrie, TrieNode } from './types';
+import type { EdgeValues, SearchResult, SearchTrie, TrieNode } from './types';
 
 const put = (node: TrieNode, str: string[], value: any, values: EdgeValues) => {
   let nextNode;
@@ -19,20 +19,19 @@ const put = (node: TrieNode, str: string[], value: any, values: EdgeValues) => {
   return nextNode;
 };
 
-export const searchTrie = <T>(trie: TrieNode, paths: string[], values: EdgeValues): SearchResult<T> => {
+export const searchTrie = <T>(trie: TrieNode, paths: string[], values: EdgeValues): SearchResult<string[], T> => {
   let node = trie;
   let lastValue;
   let lastValuePath = -1;
-  const valuePath = [];
+  // const valuePath = [];
 
   for (let i = 0; i < paths.length; ++i) {
-    node = node[paths[i]];
+    const searchPath = paths[i];
+    node = node[searchPath];
 
     if (!node) {
       break;
     }
-
-    valuePath.push(paths[i]);
 
     const value = values.get(node);
 
@@ -42,16 +41,28 @@ export const searchTrie = <T>(trie: TrieNode, paths: string[], values: EdgeValue
     }
   }
 
+  const lastIndex = lastValuePath+1;
+
   return {
     value: lastValue,
-    path: valuePath.slice(0, lastValuePath + 1),
+    path: paths.slice(0, lastIndex),
+    isComplete: lastIndex===paths.length
   };
 };
 
 /**
- * builds a word based search trie
+ * builds a "word" based search trie.
+ * Optimized for long but structured inputs, like directory names
+ *
+ * pros:
+ * - fewer steps to find solution as key name can be long
+ *
+ * cons:
+ * - potentially more keys in single node causing hashmap speed degradation
+ *
+ * - input: array of {key:string[], value}
  */
-export const buildWordTrie = <T>(lines: Array<{ key: string[]; value: T }>): SearchWordTrie<T> => {
+export const buildWordTrie = <T>(lines: Array<{ key: string[]; value: T }>): SearchTrie<string[],T> => {
   const root = Object.create(EMPTY);
   const values = new WeakMap();
 
@@ -60,11 +71,21 @@ export const buildWordTrie = <T>(lines: Array<{ key: string[]; value: T }>): Sea
   }
 
   return {
+    get(word) {
+      const {isComplete, value} = searchTrie<T>(root, word, values);
+
+      return isComplete ? value : undefined;
+    },
+    has(word): boolean {
+      const {isComplete} = searchTrie(root, word, values);
+
+      return isComplete
+    },
     findNearest(word) {
       return searchTrie(root, word, values);
     },
     put(word, value) {
       put(root, word, value, values);
-    },
+    }
   };
 };

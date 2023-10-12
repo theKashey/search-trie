@@ -19,6 +19,11 @@ describe('word trie', () => {
 
   const searchTrie = (t: typeof trie, f: string) => {
     const result = t.findNearest(f.split('/'));
+
+    if(!result){
+
+    }
+
     return {
       path: result.path ? result.path.join('/') : undefined,
       value: result.value,
@@ -37,16 +42,24 @@ describe('word trie', () => {
     });
   });
 
+  it('knows values', () => {
+    expect(trie.has('1/2/3'.split('/'))).toBe(true);
+    expect(trie.has('3/2/1'.split('/'))).toBe(false);
+    expect(trie.has('1/2/33/4'.split('/'))).toBe(false);
+  })
+
   it('picks last known value', () => {
     expect(searchTrie(trie, '1/2/33')).toEqual({
       value: 2,
       path: '1/2/33',
     });
+
     // non-existing path
     expect(searchTrie(trie, '1/2/333')).toEqual({
       value: undefined,
       path: '',
     });
+
     expect(searchTrie(trie, '1/2/334')).toEqual({
       value: 3,
       path: '1/2/334',
