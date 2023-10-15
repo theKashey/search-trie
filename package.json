@@ -31,8 +31,7 @@
     "lint": "lib-builder lint",
     "format": "lib-builder format",
     "update": "lib-builder update",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build",
+    "benchmark": "node -r esbuild-register ./benchmark/test",
     "prepublish": "yarn build && yarn changelog",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "changelog:rewrite": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
@@ -41,8 +40,10 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@size-limit/preset-small-lib": "^9.0.0",
     "@theuiteam/lib-builder": "^0.3.0",
-    "@size-limit/preset-small-lib": "^9.0.0"
+    "benchmark": "^2.1.4",
+    "esbuild-register": "^3.5.0"
   },
   "files": [
     "dist"
